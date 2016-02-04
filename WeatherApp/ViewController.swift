@@ -7,19 +7,43 @@
 //
 
 import UIKit
+import Alamofire
 
 class ViewController: UIViewController {
 
+    let weather = Weather(name: "")
+    
+    @IBOutlet var cityLbl: UILabel!
+    @IBOutlet var countryLbl: UILabel!
+    @IBOutlet var tempLbl: UILabel!
+    @IBOutlet var messageLbl: UILabel!
+    @IBOutlet var cityAndCountryLbl: UILabel!
+    @IBOutlet var humidity: UILabel!
+    @IBOutlet var dateLbl: UILabel!
+    
+    @IBOutlet var seaLevelLbl: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        weather.downloadComplete { () -> () in
+
+            self.updateUI()
+        }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBOutlet var timeLbl: UILabel!
+    
+    func updateUI() {
+        cityLbl.text = weather.city
+        countryLbl.text = weather.countryCode
+        tempLbl.text = weather.temperature + "ºC"
+        messageLbl.text = weather.weatherDescription
+        cityAndCountryLbl.text = weather.city + " " +  weather.countryCode
+        humidity.text = weather.humidity + "%"
+        seaLevelLbl.text = "Sea Level: " + weather.seaLevel
+        dateLbl.text = weather.day + " " + weather.date
+        timeLbl.text = weather.time
+        
     }
-
-
+  
 }
 
